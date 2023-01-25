@@ -1,3 +1,11 @@
+/**
+ * 
+ * @author Daniel Orkin
+ * 
+ * @version 25.01.2023
+ * 
+ */
+
 import java.util.Random;
 
 public class Solver {
@@ -11,10 +19,17 @@ public class Solver {
         initBoard();
     }
     
+    /**
+     * 
+     * @param queens: Index -> Zeile | Value -> Spalte
+     * 
+     * Setzt je eine der N-Vielen Damen in eine Zeile.
+     * 
+     */
+    
     private void initBoard() {
         for (int i = 0; i < SIZE; i++) {
-            int col = rand.nextInt(SIZE);
-            queens[i] = col;
+            queens[i] = rand.nextInt(SIZE);
         }
     }
     
@@ -27,6 +42,14 @@ public class Solver {
             System.out.println();
         }
     }
+    
+    /**
+     * 
+     * @param row: Zeile der untersuchten Stelle
+     * @param col: Spalte der untersuchten Stelle
+     * @return Anzahl der auftretenden "Konflikte"
+     * 
+     */
     
     private int countConflicts(int row, int col) {
         int conflicts = 0;
@@ -42,6 +65,14 @@ public class Solver {
         return conflicts;
     }
     
+    /**
+     * 
+     * Untersucht, ob bereits alle Damen richtig gesetzt werden und
+     * es somit keine "Konflikte" an {queens.index, queens[index]}
+     * mehr gibt.
+     * 
+     */
+    
     private boolean isSolution() {
         for (int row = 0; row < SIZE; row++) {
             if (countConflicts(row, queens[row]) > 0) {
@@ -51,24 +82,35 @@ public class Solver {
         return true;
     }
     
+    /**
+     * 
+     * Auswahl einer zufälligen Dame (Zeile).
+     * Setzen der Dame auf das Feld mit den geringsten "Konflikten".
+     * 
+     * Beim Iterieren durch mögliche Spalten der Dame.
+     * 
+     * @param queen: Zeile der Dame
+     * 
+     */
+    
     public void solve() {
         while (!isSolution()) {
-            int row = rand.nextInt(SIZE);
+            int queen = rand.nextInt(SIZE);
             int minConflicts = Integer.MAX_VALUE;
             int minCol = -1;
 
             for (int col = 0; col < SIZE; col++) {
-                if (col == queens[row]) {
+                if (col == queens[queen]) {
                     continue;
                 }
-                int conflicts = countConflicts(row, col);
+                int conflicts = countConflicts(queen, col);
                 if (conflicts < minConflicts) {
                     minConflicts = conflicts;
                     minCol = col;
                 }
             }
 
-            queens[row] = minCol;
+            queens[queen] = minCol;
         }
         printBoard();
     }
