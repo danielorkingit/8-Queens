@@ -116,7 +116,7 @@ public class Solver {
     }
 
     public static void main(String[] args) {
-        Solver solver = new Solver(5);
+        Solver solver = new Solver(40);
         solver.solve();
     }
 }
